@@ -23,9 +23,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 48px;
-      height: 64px;
-      background: rgba(255,255,255,0.9);
+      padding: 0 clamp(24px, 5vw, 72px);
+      height: 80px;
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(0,0,0,0.07);
@@ -34,31 +34,31 @@
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 36px;
+      gap: clamp(24px, 3vw, 52px);
       flex: 1;
     }
 
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: clamp(24px, 3vw, 48px);
       flex: 1;
       justify-content: flex-end;
     }
 
     .nav-link {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
       color: rgba(0,0,0,0.5);
       text-decoration: none;
-      letter-spacing: 0.01em;
-      transition: color 0.2s ease, font-weight 0.1s ease;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
       white-space: nowrap;
     }
     .nav-link:hover {
       color: #b10702;
-      font-weight: 700;
     }
 
     /* Center Logo */
@@ -68,33 +68,33 @@
       justify-content: center;
       text-decoration: none;
       flex-shrink: 0;
-      padding: 0 24px;
+      padding: 0 clamp(12px, 2vw, 32px);
     }
 
-    .nav-logo img {
-      height: 40px;
+    .logo-svg {
+      height: 48px;
       width: auto;
       display: block;
-      object-fit: contain;
-      image-rendering: crisp-edges;
+      overflow: visible;
     }
 
     /* Connect button */
     .nav-btn {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
       color: rgba(0,0,0,0.5);
       background: none;
       border: none;
       padding: 0;
-      letter-spacing: 0.01em;
-      transition: color 0.2s ease, font-weight 0.1s ease;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s ease;
       white-space: nowrap;
     }
     .nav-btn:hover {
       color: #b10702;
-      font-weight: 700;
     }
 
     /* ── Hero ── */
@@ -105,7 +105,14 @@
       align-items: center;
       justify-content: flex-start;
       padding-left: 6vw;
-      padding-top: 64px;
+      padding-top: 80px;
+    }
+
+    .typewriter-line {
+      display: flex;
+      align-items: center;
+      gap: 0.04em;
+      line-height: 1;
     }
 
     .typewriter-text {
@@ -118,7 +125,90 @@
       line-height: 1;
     }
 
+    /* SVG text cursor */
+    .text-cursor {
+      display: inline-block;
+      height: 7em;
+      width: calc(7em * (100 / 125));
+      margin-left: 0.05em;
+      vertical-align: middle;
+      animation: cursorBlink 0.9s step-start infinite;
+      flex-shrink: 0;
+    }
 
+    .text-cursor path {
+      fill: #b10702;
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ── Scroll button ── */
+    .scroll-btn {
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .scroll-btn-pill {
+      width: 36px;
+      height: 58px;
+      border: 1.5px solid #b10702;
+      border-radius: 999px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 9px;
+      transition: border-color 0.2s ease;
+    }
+
+    .scroll-btn:hover .scroll-btn-pill {
+      border-color: #8a0501;
+    }
+
+    .scroll-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #b10702;
+      animation: scrollDot 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    .scroll-btn:hover .scroll-dot {
+      background: #8a0501;
+    }
+
+    @keyframes scrollDot {
+      0%   { opacity: 1; transform: translateY(0); }
+      80%  { opacity: 0; transform: translateY(22px); }
+      100% { opacity: 0; transform: translateY(22px); }
+    }
+
+    .scroll-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #b10702;
+      transition: color 0.2s ease;
+    }
+
+    .scroll-btn:hover .scroll-label {
+      color: #8a0501;
+    }
   </style>
 </head>
 <body>
@@ -130,8 +220,24 @@
       <a href="#" class="nav-link">Cases</a>
     </div>
 
-    <a href="index.html" class="nav-logo">
-      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDI4Ljg4IDY0OC43NSI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZm9udC1zaXplOiAzOS4zNXB4OwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgZmlsbDogIzAzMGYxYzsKICAgICAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ0hlbHZldGljYSBOZXVlJywgQXJpYWwsIHNhbnMtc2VyaWY7CiAgICAgICAgCiAgICAgICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgICAgfQoKICAgICAgLmNscy0yIHsKICAgICAgICBmb250LXNpemU6IDMwMS40MnB4OwogICAgICB9CgogICAgICAuY2xzLTMgewogICAgICAgIGZpbGw6ICNiMTA3MDI7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8Zz4KICAgICAgPGc+CiAgICAgICAgPHRleHQgY2xhc3M9ImNscy0yIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MTguODkgMjkwLjM1KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlRoZSBIZWxwZXI8L3RzcGFuPjx0c3BhbiB4PSIwIiB5PSIyMzMuMTUiPlN0dWRpbzwvdHNwYW4+PC90ZXh0PgogICAgICAgIDx0ZXh0IGNsYXNzPSJjbHMtMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTk2Mi42NSA5Ny41MikiPjx0c3BhbiB4PSIwIiB5PSIwIj5UTTwvdHNwYW4+PC90ZXh0PgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTM0MS40NiwzNzYuOTdsLTE3Ni4zMSwxMTUuMjIsNDUuNDYsMTA4LjFjLTU3LjIzLTIyLjc5LTc2LjkzLTY1LjA0LTk1Ljk5LTExOS45OGwxODYuMi0xMTguMzdjNC41OC0xOC45Ni02LjgxLTEyMC4yMy0xMy45NC0xNDEuMDMtNy4wMy0yMC41MS0xMjkuOTItMTg1Ljk1LTc5LjEzLTE5Ni44OSwxMy4xMywxLjI3LDE5LjM0LDE4LjQxLDI1LjczLDI4LjE3LDE5LjEyLDI5LjE4LDg3Ljc4LDEzNy41MSw5NC40MywxNjMuNyw0LjIxLDE2LjU4LDE3LjYxLDE1NC4xLDEzLjU0LDE2MS4wOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik04MS42OSwwbDE1NS40NSwxODYuNjFjMTUuMTMsNDAuMzQsNDcuNTksOTMuNTUsMTIuNTUsMTMxLjQxLTcuMS4wNy00MC4yOS05OC40OC00OC43MS0xMTMuMjVDMTc2LjI3LDE2MS40Myw2OS41NSw2Mi44MSw3Mi4wNiwyMC45NmMuNTUtOS4yMywxLjM4LTE1LjQ3LDkuNjMtMjAuOTZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTk4LjU4LDM0Mi4xMmMtOS40Nyw4Ljc0LTEwLjI3LTIuOTItMTMuMzctNy43MS0xOS41My0zMC4yNC0zMC43LTczLjY5LTUyLjU5LTEwMy4zMUM5OC4xOCwxODQuNSwxNi42MSwxNTcuNDksMjQuNiw5MC4wNGMxMS4wNC0xLjQxLDE4LjgsNi4yMywyNi44OCwxMi4wOCwyMC45LDE1LjExLDEwNS43LDk0LjUzLDExOS43OCwxMTQuMzQsMTYuNSwyMy4yLDUwLjg4LDEwMy44OSwyNy4zLDEyNS42N1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik05MC41OCwzNDguMThjNi4yNyw2LjQtNDQuODIsOTQuMDMtNDcuNiwxMTEuMzgtNi44Myw0Mi41MywxMS42OCwxMjcuOTIsMTYuMTYsMTc1LjI3LDIuODksMzAuNTQtMjAuMTQsMy0yNy41OC04LjVDMTUuMzgsNjAxLjMyLTIuODIsNDg4LjkzLjY1LDQ1OS44YzMuNjktMzAuOTQsNTEuMzgtMTEwLjIzLDg5LjkyLTExMS42MloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0zNjYuODIsMjk0LjExYy0yNC4yLTQ3LjE3LTIuMTYtMTExLjU5LDUzLjk2LTEyMC4xMSwxNS40Mi0xNi42LTc1LjU1LTQyLjY4LTg5Ljk5LTE3Ljk1LjctMTA0LjQyLDExNS45LTIwLjYzLDE0My44OSwyNy4wMi0yNC4xOSwxNC44MS00Ny41OCw5LjY4LTY5LjIsMzIuNzMtMjIuNjgsMjQuMTktMTcuNzUsNTYuMjgtMzguNjYsNzguMzFaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNOTQuNiwyMzYuMDljOC40Miw4LjMzLDUwLjM4LDcxLjI5LDUzLjIyLDgxLjgzLDQuNDIsMTYuNCw4LjMxLDQyLjAxLTYuMTksNTQuMTItNy42MS0uMDgtNTkuMDUtODguMjEtNzEuOTEtMTAyLjA2QzQ0LjY2LDI0Mi45Ny01LjA0LDIzMi4zMS40MiwxODkuMDljLjc5LTYuMjQtMS4zMi0xMy4wMyw5LjA1LTguOTcsNC43NCwxLjg2LDgxLjUxLDUyLjM4LDg1LjE0LDU1Ljk2WiIvPgogICAgICAgIDxjaXJjbGUgY2xhc3M9ImNscy0zIiBjeD0iMzk0Ljg5IiBjeT0iMTY1LjA4IiByPSI2Ljc0Ii8+CiAgICAgIDwvZz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="The Helper Studio" />
+    <a href="index.html" class="nav-logo" aria-label="The Helper Studio">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2028.88 648.75" class="logo-svg">
+        <defs>
+          <style>
+            .logo-text { fill: #030f1c; font-family: 'Inter','Helvetica Neue',Arial,sans-serif; font-weight: 700; }
+            .logo-mark { fill: #b10702; }
+          </style>
+        </defs>
+        <text class="logo-text" font-size="301.42" transform="translate(518.89 290.35)"><tspan x="0" y="0">The Helper</tspan><tspan x="0" y="233.15">Studio</tspan></text>
+        <text class="logo-text" font-size="39.35" transform="translate(1480 97.52)"><tspan x="0" y="0">TM</tspan></text>
+        <path class="logo-mark" d="M341.46,376.97l-176.31,115.22,45.46,108.1c-57.23-22.79-76.93-65.04-95.99-119.98l186.2-118.37c4.58-18.96-6.81-120.23-13.94-141.03-7.03-20.51-129.92-185.95-79.13-196.89,13.13,1.27,19.34,18.41,25.73,28.17,19.12,29.18,87.78,137.51,94.43,163.7,4.21,16.58,17.61,154.1,13.54,161.08Z"/>
+        <path class="logo-mark" d="M81.69,0l155.45,186.61c15.13,40.34,47.59,93.55,12.55,131.41-7.1.07-40.29-98.48-48.71-113.25C176.27,161.43,69.55,62.81,72.06,20.96c.55-9.23,1.38-15.47,9.63-20.96Z"/>
+        <path class="logo-mark" d="M198.58,342.12c-9.47,8.74-10.27-2.92-13.37-7.71-19.53-30.24-30.7-73.69-52.59-103.31C98.18,184.5,16.61,157.49,24.6,90.04c11.04-1.41,18.8,6.23,26.88,12.08,20.9,15.11,105.7,94.53,119.78,114.34,16.5,23.2,50.88,103.89,27.3,125.67Z"/>
+        <path class="logo-mark" d="M90.58,348.18c6.27,6.4-44.82,94.03-47.6,111.38-6.83,42.53,11.68,127.92,16.16,175.27,2.89,30.54-20.14,3-27.58-8.5C15.38,601.32-2.82,488.93.65,459.8c3.69-30.94,51.38-110.23,89.92-111.62Z"/>
+        <path class="logo-mark" d="M366.82,294.11c-24.2-47.17-2.16-111.59,53.96-120.11,15.42-16.6-75.55-42.68-89.99-17.95.7-104.42,115.9-20.63,143.89,27.02-24.19,14.81-47.58,9.68-69.2,32.73-22.68,24.19-17.75,56.28-38.66,78.31Z"/>
+        <path class="logo-mark" d="M94.6,236.09c8.42,8.33,50.38,71.29,53.22,81.83,4.42,16.4,8.31,42.01-6.19,54.12-7.61-.08-59.05-88.21-71.91-102.06C44.66,242.97-5.04,232.31.42,189.09c.79-6.24-1.32-13.03,9.05-8.97,4.74,1.86,81.51,52.38,85.14,55.96Z"/>
+        <circle class="logo-mark" cx="394.89" cy="165.08" r="6.74"/>
+      </svg>
     </a>
 
     <div class="nav-right">
@@ -141,8 +247,20 @@
   </nav>
 
   <div class="scene">
-    <span class="typewriter-text" id="tw"></span>
+    <div class="typewriter-line">
+      <span class="typewriter-text" id="tw"></span>
+      <svg class="text-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125">
+        <path d="M51.2,15.4c0-6.6,0-10.2,12.5-10.2h6.2v-2.5h-6.2c-8.4,0-12.1,1.9-13.7,4.7-1.6-2.9-5.3-4.7-13.7-4.7h-6.2v2.5h6.2c12.5,0,12.5,3.6,12.5,10.2v45.9h-7v2.5h7v44.8c0,6.6,0,11.3-12.5,11.3h-6.2v2.5h6.2c8.4,0,12.1-2.2,13.7-5.4,1.6,3.2,5.3,5.4,13.7,5.4h6.2v-2.5h-6.2c-12.5,0-12.5-4.7-12.5-11.3v-44.8h7v-2.5h-7V15.4Z"/>
+      </svg>
+    </div>
   </div>
+
+  <button class="scroll-btn" onclick="window.location.href='services.html'">
+    <div class="scroll-btn-pill">
+      <div class="scroll-dot"></div>
+    </div>
+    <span class="scroll-label">Scroll</span>
+  </button>
 
   <script>
     /* ── Typewriter ── */
