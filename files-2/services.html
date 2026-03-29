@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — The Helper Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; min-height: 100%;
+      background: #fff;
+      font-family: 'Inter', sans-serif;
+      color: #030f1c;
+    }
+
+    /* ── Nav (identical to index) ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(24px, 5vw, 72px);
+      height: 80px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 3vw, 52px);
+      flex: 1;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 3vw, 48px);
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
+      color: rgba(0,0,0,0.5);
+      text-decoration: none;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #b10702;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
+      padding: 0 clamp(12px, 2vw, 32px);
+    }
+
+    .logo-svg {
+      height: 48px;
+      width: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .nav-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
+      color: rgba(0,0,0,0.5);
+      background: none;
+      border: none;
+      padding: 0;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-btn:hover {
+      color: #b10702;
+    }
+
+    /* ── Page content ── */
+    .page {
+      padding-top: 80px;
+      min-height: 100vh;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 100px 6vw 80px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .hero-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #b10702;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 7vw, 110px);
+      font-weight: 700;
+      color: #030f1c;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      max-width: 900px;
+    }
+
+    .hero-title span {
+      color: #b10702;
+    }
+
+    .hero-sub {
+      margin-top: 32px;
+      font-size: clamp(15px, 1.5vw, 18px);
+      font-weight: 400;
+      color: rgba(0,0,0,0.45);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* Services grid */
+    .services-section {
+      padding: 80px 6vw 120px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1px;
+      background: rgba(0,0,0,0.07);
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .service-card {
+      background: #fff;
+      padding: 48px 40px;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+
+    .service-card:hover {
+      background: #fafafa;
+    }
+
+    .service-card:hover .card-arrow {
+      transform: translate(4px, -4px);
+      color: #b10702;
+    }
+
+    .card-number {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: #b10702;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #030f1c;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0,0,0,0.5);
+      line-height: 1.7;
+    }
+
+    .card-arrow {
+      position: absolute;
+      top: 48px; right: 40px;
+      font-size: 20px;
+      color: rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    /* Bottom CTA strip */
+    .cta-strip {
+      padding: 80px 6vw 60px;
+      background: #030f1c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .cta-strip h2 {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .cta-strip h2 span { color: #b10702; }
+
+    .cta-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #b10702;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #b10702;
+      padding-bottom: 2px;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+    .cta-link:hover { opacity: 0.7; }
+
+    /* Contact info */
+    .cta-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .cta-contact--center {
+      align-items: center;
+    }
+
+    .cta-contact a {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+
+    .cta-contact a:hover { color: #b10702; }
+
+    /* Social bar */
+    .social-bar {
+      background: #030f1c;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 28px 6vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-link:hover { color: #b10702; }
+
+    .social-link svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      display: block;
+    }
+
+    /* Page transition */
+    body {
+      animation: fadeIn 0.35s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="services.html" class="nav-link active">Services</a>
+      <a href="#" class="nav-link">Cases</a>
+    </div>
+
+    <a href="index.html" class="nav-logo" aria-label="The Helper Studio">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2028.88 648.75" class="logo-svg">
+        <defs>
+          <style>
+            .logo-text { fill: #030f1c; font-family: 'Inter','Helvetica Neue',Arial,sans-serif; font-weight: 700; }
+            .logo-mark { fill: #b10702; }
+          </style>
+        </defs>
+        <text class="logo-text" font-size="301.42" transform="translate(518.89 290.35)"><tspan x="0" y="0">The Helper</tspan><tspan x="0" y="233.15">Studio</tspan></text>
+        <text class="logo-text" font-size="39.35" transform="translate(1480 97.52)"><tspan x="0" y="0">TM</tspan></text>
+        <path class="logo-mark" d="M341.46,376.97l-176.31,115.22,45.46,108.1c-57.23-22.79-76.93-65.04-95.99-119.98l186.2-118.37c4.58-18.96-6.81-120.23-13.94-141.03-7.03-20.51-129.92-185.95-79.13-196.89,13.13,1.27,19.34,18.41,25.73,28.17,19.12,29.18,87.78,137.51,94.43,163.7,4.21,16.58,17.61,154.1,13.54,161.08Z"/>
+        <path class="logo-mark" d="M81.69,0l155.45,186.61c15.13,40.34,47.59,93.55,12.55,131.41-7.1.07-40.29-98.48-48.71-113.25C176.27,161.43,69.55,62.81,72.06,20.96c.55-9.23,1.38-15.47,9.63-20.96Z"/>
+        <path class="logo-mark" d="M198.58,342.12c-9.47,8.74-10.27-2.92-13.37-7.71-19.53-30.24-30.7-73.69-52.59-103.31C98.18,184.5,16.61,157.49,24.6,90.04c11.04-1.41,18.8,6.23,26.88,12.08,20.9,15.11,105.7,94.53,119.78,114.34,16.5,23.2,50.88,103.89,27.3,125.67Z"/>
+        <path class="logo-mark" d="M90.58,348.18c6.27,6.4-44.82,94.03-47.6,111.38-6.83,42.53,11.68,127.92,16.16,175.27,2.89,30.54-20.14,3-27.58-8.5C15.38,601.32-2.82,488.93.65,459.8c3.69-30.94,51.38-110.23,89.92-111.62Z"/>
+        <path class="logo-mark" d="M366.82,294.11c-24.2-47.17-2.16-111.59,53.96-120.11,15.42-16.6-75.55-42.68-89.99-17.95.7-104.42,115.9-20.63,143.89,27.02-24.19,14.81-47.58,9.68-69.2,32.73-22.68,24.19-17.75,56.28-38.66,78.31Z"/>
+        <path class="logo-mark" d="M94.6,236.09c8.42,8.33,50.38,71.29,53.22,81.83,4.42,16.4,8.31,42.01-6.19,54.12-7.61-.08-59.05-88.21-71.91-102.06C44.66,242.97-5.04,232.31.42,189.09c.79-6.24-1.32-13.03,9.05-8.97,4.74,1.86,81.51,52.38,85.14,55.96Z"/>
+        <circle class="logo-mark" cx="394.89" cy="165.08" r="6.74"/>
+      </svg>
+    </a>
+
+    <div class="nav-right">
+      <a href="#" class="nav-link">About</a>
+      <button class="nav-btn">Connect</button>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- Hero -->
+    <section class="hero">
+      <p class="hero-label">What we do</p>
+      <h1 class="hero-title">Services that <span>deliver.</span></h1>
+      <p class="hero-sub">We craft strategies, build brands, and ship experiences that move people — and businesses — forward.</p>
+    </section>
+
+    <!-- Services grid -->
+    <section class="services-section">
+      <div class="services-grid">
+
+        <div class="service-card">
+          <p class="card-number">01</p>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-title">Brand Strategy</h3>
+          <p class="card-desc">We define who you are, what you stand for, and how you show up — from positioning to voice to visual identity.</p>
+        </div>
+
+        <div class="service-card">
+          <p class="card-number">02</p>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-title">Creative Direction</h3>
+          <p class="card-desc">Bold ideas executed with precision. We lead creative across campaigns, content, and campaigns that stop people mid-scroll.</p>
+        </div>
+
+        <div class="service-card">
+          <p class="card-number">03</p>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-title">Web & Digital</h3>
+          <p class="card-desc">Fast, beautiful, conversion-focused digital experiences. From landing pages to full product builds.</p>
+        </div>
+
+        <div class="service-card">
+          <p class="card-number">04</p>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-title">Content & Copywriting</h3>
+          <p class="card-desc">Words that work. We write with clarity, personality, and purpose — from taglines to long-form narratives.</p>
+        </div>
+
+        <div class="service-card">
+          <p class="card-number">05</p>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-title">Social & Campaigns</h3>
+          <p class="card-desc">Integrated campaigns built for real platforms. We plan, produce, and optimise across every channel that matters.</p>
+        </div>
+
+        <div class="service-card">
+          <p class="card-number">06</p>
+          <span class="card-arrow">↗</span>
+          <h3 class="card-title">Consulting & Advisory</h3>
+          <p class="card-desc">When you need a trusted thinking partner. We work directly with founders and teams to unlock what's next.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-strip">
+      <h2>Ready to get<br><span>started?</span></h2>
+      <div class="cta-contact cta-contact--center">
+        <a href="/cdn-cgi/l/email-protection#07736f626f626b776275747372636e68626047606a666e6b2964686a"><span class="__cf_email__" data-cfemail="f2869a979a979e829780818687969b9d9795b2959f939b9edc919d9f">[email&#160;protected]</span></a>
+        <a href="tel:+01552308813">+01552308813</a>
+      </div>
+    </div>
+
+    <!-- Social bar -->
+    <div class="social-bar">
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/thehelperstudio.eg" target="_blank" class="social-link" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/thehelperstudioeg/" target="_blank" class="social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <!-- X (Twitter) -->
+      <a href="https://x.com/thehelperstudio" target="_blank" class="social-link" aria-label="X">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+      </a>
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/company/thehelperstudio-egy" target="_blank" class="social-link" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 2
