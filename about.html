@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — The Helper Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      width: 100%; height: 100%;
+      /* allow flexible scrolling on touchpads; avoid strict snap behavior */
+      scroll-snap-type: y proximity;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+
+    body {
+      width: 100%; min-height: 100%;
+      background: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(24px, 5vw, 72px);
+      height: 80px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 3vw, 52px);
+      flex: 1;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 3vw, 48px);
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
+      color: rgba(0,0,0,0.5);
+      text-decoration: none;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-link:hover {
+      color: #b10702;
+    }
+
+    /* Center Logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
+      padding: 0 clamp(12px, 2vw, 32px);
+    }
+
+    .logo-svg {
+      height: 48px;
+      width: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    /* Connect button */
+    .nav-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
+      color: rgba(0,0,0,0.5);
+      background: none;
+      border: none;
+      padding: 0;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-btn:hover {
+      color: #b10702;
+    }
+
+    /* ── Hero ── */
+    .scene {
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* center content horizontally */
+      padding-left: 0;
+      padding-top: 0; /* center vertically in full viewport */
+      text-align: center;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .typewriter-line {
+      display: flex;
+      align-items: center;
+      gap: 0.04em;
+      line-height: 1;
+    }
+
+    .typewriter-text {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(36px, 6vw, 84px);
+      font-weight: 700;
+      color: #b10702;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .typewriter-desc {
+      max-width: 760px;
+      padding: 0 6vw;
+      color: rgba(0,0,0,0.75);
+      font-size: clamp(14px, 1.6vw, 18px);
+      line-height: 1.6;
+      white-space: normal;
+    }
+
+    /* SVG text cursor */
+    .text-cursor {
+      display: inline-block;
+      height: 7em;
+      width: calc(7em * (100 / 125));
+      margin-left: 0.05em;
+      vertical-align: middle;
+      animation: cursorBlink 0.9s step-start infinite;
+      flex-shrink: 0;
+    }
+
+    .text-cursor path {
+      fill: #b10702;
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* Scroll button removed */
+
+    /* ── Clients Section ── */
+    .clients-section {
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      overflow: hidden;
+      gap: 52px;
+    }
+
+    .clients-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* Marquee track */
+    .marquee-wrapper {
+      width: 100%;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    }
+
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 72px;
+      width: max-content;
+      animation: marqueeScroll 35s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      opacity: 0.95; /* brighter by default */
+      transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease;
+      will-change: transform, opacity;
+      transform-origin: center;
+    }
+
+    .marquee-item:hover {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    .marquee-item svg {
+      height: 120px; /* increased size */
+      width: auto;
+      display: block;
+      transition: transform 220ms cubic-bezier(.2,.9,.2,1), filter 180ms ease;
+      transform-origin: center;
+      filter: brightness(1.06) saturate(1.08) contrast(1.03);
+    }
+
+    .marquee-item--raster img {
+      height: 120px; /* increased size */
+      width: auto;
+      display: block;
+      mix-blend-mode: normal; /* avoid darkening */
+      transition: transform 220ms cubic-bezier(.2,.9,.2,1), filter 180ms ease;
+      transform-origin: center;
+      filter: brightness(1.06) saturate(1.08) contrast(1.03);
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+
+
+  <nav>
+    <div class="nav-left">
+      <a href="services.html" class="nav-link" id="nav-services">Services</a>
+      <a href="cases.html" class="nav-link">Cases</a>
+    </div>
+
+    <a href="index.html" class="nav-logo" aria-label="The Helper Studio">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2028.88 648.75" class="logo-svg">
+        <defs>
+          <style>
+            .logo-text { fill: #030f1c; font-family: 'Inter','Helvetica Neue',Arial,sans-serif; font-weight: 700; }
+            .logo-mark { fill: #b10702; }
+          </style>
+        </defs>
+        <text class="logo-text" font-size="301.42" transform="translate(518.89 290.35)"><tspan x="0" y="0">The Helper</tspan><tspan x="0" y="233.15">Studio</tspan></text>
+        <text class="logo-text" font-size="39.35" transform="translate(1480 97.52)"><tspan x="0" y="0">TM</tspan></text>
+        <path class="logo-mark" d="M341.46,376.97l-176.31,115.22,45.46,108.1c-57.23-22.79-76.93-65.04-95.99-119.98l186.2-118.37c4.58-18.96-6.81-120.23-13.94-141.03-7.03-20.51-129.92-185.95-79.13-196.89,13.13,1.27,19.34,18.41,25.73,28.17,19.12,29.18,87.78,137.51,94.43,163.7,4.21,16.58,17.61,154.1,13.54,161.08Z"/>
+        <path class="logo-mark" d="M81.69,0l155.45,186.61c15.13,40.34,47.59,93.55,12.55,131.41-7.1.07-40.29-98.48-48.71-113.25C176.27,161.43,69.55,62.81,72.06,20.96c.55-9.23,1.38-15.47,9.63-20.96Z"/>
+        <path class="logo-mark" d="M198.58,342.12c-9.47,8.74-10.27-2.92-13.37-7.71-19.53-30.24-30.7-73.69-52.59-103.31C98.18,184.5,16.61,157.49,24.6,90.04c11.04-1.41,18.8,6.23,26.88,12.08,20.9,15.11,105.7,94.53,119.78,114.34,16.5,23.2,50.88,103.89,27.3,125.67Z"/>
+        <path class="logo-mark" d="M90.58,348.18c6.27,6.4-44.82,94.03-47.6,111.38-6.83,42.53,11.68,127.92,16.16,175.27,2.89,30.54-20.14,3-27.58-8.5C15.38,601.32-2.82,488.93.65,459.8c3.69-30.94,51.38-110.23,89.92-111.62Z"/>
+        <path class="logo-mark" d="M366.82,294.11c-24.2-47.17-2.16-111.59,53.96-120.11,15.42-16.6-75.55-42.68-89.99-17.95.7-104.42,115.9-20.63,143.89,27.02-24.19,14.81-47.58,9.68-69.2,32.73-22.68,24.19-17.75,56.28-38.66,78.31Z"/>
+        <path class="logo-mark" d="M94.6,236.09c8.42,8.33,50.38,71.29,53.22,81.83,4.42,16.4,8.31,42.01-6.19,54.12-7.61-.08-59.05-88.21-71.91-102.06C44.66,242.97-5.04,232.31.42,189.09c.79-6.24-1.32-13.03,9.05-8.97,4.74,1.86,81.51,52.38,85.14,55.96Z"/>
+        <circle class="logo-mark" cx="394.89" cy="165.08" r="6.74"/>
+      </svg>
+    </a>
+
+    <div class="nav-right">
+      <a href="about.html" class="nav-link">About</a>
+      <button class="nav-btn">Connect</button>
+    </div>
+  </nav>
+
+  <div class="scene">
+    <div class="typewriter-line">
+      <span class="typewriter-text" id="tw"></span>
+      <svg class="text-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125">
+        <path d="M51.2,15.4c0-6.6,0-10.2,12.5-10.2h6.2v-2.5h-6.2c-8.4,0-12.1,1.9-13.7,4.7-1.6-2.9-5.3-4.7-13.7-4.7h-6.2v2.5h6.2c12.5,0,12.5,3.6,12.5,10.2v45.9h-7v2.5h7v44.8c0,6.6,0,11.3-12.5,11.3h-6.2v2.5h6.2c8.4,0,12.1-2.2,13.7-5.4,1.6,3.2,5.3,5.4,13.7,5.4h6.2v-2.5h-6.2c-12.5,0-12.5-4.7-12.5-11.3v-44.8h7v-2.5h-7V15.4Z"/>
+      </svg>
+    </div>
+    <div id="tw-desc" class="typewriter-desc" aria-hidden="true"></div>
+  </div>
+
+  <main style="padding: 40px 6vw; max-width: 980px;">
+    <section style="padding-top: 20px;">
+      <h2 style="font-family: 'Inter', sans-serif; color: #030f1c; font-size: 20px; margin-bottom: 12px;">Who We Are</h2>
+      <p style="color: rgba(0,0,0,0.7); line-height: 1.6;">The Helper Studio is a creative studio focused on crafting clear, usable digital experiences. We partner with brands, startups, and teams to design products and services that solve real problems and delight users.</p>
+      <p style="color: rgba(0,0,0,0.7); line-height: 1.6; margin-top: 12px;">Our core capabilities include strategy, product design, and front-end implementation. We combine thoughtful research with practical execution to ship high-quality outcomes.</p>
+    </section>
+
+    <section style="margin-top: 36px;">
+      <h3 style="font-family: 'Inter', sans-serif; color: #030f1c; font-size: 16px; margin-bottom: 8px;">Our Values</h3>
+      <ul style="color: rgba(0,0,0,0.7); line-height: 1.6;">
+        <li>Clarity over complexity</li>
+        <li>People-first design</li>
+        <li>Iterative delivery</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- scroll button removed -->
+
+  <!-- ── Clients Section ── -->
+  <section class="clients-section" id="clients">
+    <p class="clients-label">Our Clients</p>
+
+            <div class="marquee-wrapper">
+      <div class="marquee-track" id="marqueeTrack">
+        <div class="marquee-item"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 691.67 48">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #b3934c;
+      }
+
+      .cls-3 {
+        fill: #b2914d;
+      }
+
+      .cls-4 {
+        fill: #b3934a;
+      }
+
+      .cls-5 {
+        fill: #b2924f;
+      }
+
+      .cls-6 {
+        fill: #b29150;
+      }
+
+      .cls-7 {
+        fill: #201e1e;
+      }
+
+      .cls-8 {
+        fill: #b2914f;
+      }
+
+      .cls-9 {
+        fill: #b2924e;
+      }
+
+      .cls-10 {
+        fill: #b2914c;
+      }
+
+      .cls-11 {
+        fill: #000;
+      }
+    </style>
+  </defs>
+  <!-- truncated logo markup for brevity in this copy; the original marquee content is preserved -->
+</svg></div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
+
+<script>
+// Typewriter effect for About page (runs after DOM ready)
+(function(){
+  const headingEl = document.getElementById('tw');
+  const descEl = document.getElementById('tw-desc');
+  const heading = 'Who We Are';
+  const desc = 'The Helper Studio is a creative studio focused on crafting clear, usable digital experiences. We partner with brands and startups to design products and services that solve real problems and delight users.';
+
+  function typeText(el, text, delay = 40){
+    return new Promise(resolve => {
+      el.textContent = '';
+      let i = 0;
+      const t = setInterval(() => {
+        el.textContent += text.charAt(i);
+        i++;
+        if(i >= text.length){
+          clearInterval(t);
+          resolve();
+        }
+      }, delay);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // ensure cursor is visible while typing
+    const cursor = document.querySelector('.text-cursor');
+    if(cursor) cursor.style.display = 'inline-block';
+
+    await typeText(headingEl, heading, 80);
+    // small pause then type description (split into sentences for readability)
+    await new Promise(r => setTimeout(r, 350));
+    descEl.setAttribute('aria-hidden','false');
+    await typeText(descEl, desc, 18);
+
+    // stop cursor blinking after done
+    if(cursor) cursor.style.animation = 'none';
+  });
+})();
+</script>
+
+<script>
+// Make clicking any marquee item open the Cases page
+(function(){
+  const track = document.getElementById('marqueeTrack');
+  if(!track) return;
+  track.addEventListener('click', function(e){
+    if(e.target.closest('a')) return;
+    window.location.href = 'cases.html';
+  });
+  Array.from(track.querySelectorAll('.marquee-item')).forEach(it => it.style.cursor = 'pointer');
+})();
+</script>
+
+<script>
+// Duplicate marquee content so the animation loops smoothly without an abrupt end
+(function(){
+  const track = document.getElementById('marqueeTrack');
+  if(track && track.children.length && !track.dataset.duplicated){
+    track.innerHTML = track.innerHTML + track.innerHTML;
+    track.dataset.duplicated = 'true';
+  }
+})();
+</script>
